@@ -1,0 +1,46 @@
+# Ablation of the fusion design choices (Project 2.2). Same data and training settings as default.yaml;
+# only the model entries differ. Runs go to a separate folder so the main comparison stays clean.
+# Main runs to compare against: gated (modality_dropout 0.15), gated_clip (0.15), cross_attention (1 layer).
+
+paths:
+  features_dir: /content/features
+  runs_dir: /content/drive/MyDrive/vizwiz_individual/runs_ablation
+  local_cache_dir: null
+
+data:
+  parts: []
+  label: hard
+  soft_label_weight: 1.0
+
+training:
+  seeds: [0, 1, 2]
+  epochs: 30
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.01
+  patience: 4
+  train_probe_size: 5000
+
+models:
+  gated_md0:                # no modality dropout: does blanking inputs help the gate?
+    base: gated
+    hidden: 256
+    dropout: 0.3
+    modality_dropout: 0.0
+  gated_md30:               # twice the main setting (0.15)
+    base: gated
+    hidden: 256
+    dropout: 0.3
+    modality_dropout: 0.3
+  gated_clip_md0:           # same question on CLIP features
+    base: gated
+    features: clip
+    hidden: 256
+    dropout: 0.3
+    modality_dropout: 0.0
+  cross_attention_l2:       # two stacked bidirectional blocks instead of one
+    base: cross_attention
+    d_model: 256
+    heads: 4
+    layers: 2
+    dropout: 0.1

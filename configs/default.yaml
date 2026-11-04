@@ -1,0 +1,54 @@
+# Project 2.2 settings. Every run reads this file, so results are reproducible from one place.
+# Change values here (or copy to a new file) instead of editing code.
+
+paths:
+  features_dir: /content/features                            # written by python -m src.features (Colab disk)
+  runs_dir: /content/drive/MyDrive/vizwiz_individual/runs           # one sub-folder per model and seed
+  local_cache_dir: null     # e.g. /content/features_local: copy features off Drive before loading (or use --cache-dir)
+
+data:
+  parts: []                 # only for the older per-part layout; ignored when features_dir has manifest.json
+  label: hard               # hard = answerable flag; soft = mix with the crowd vote share (ablation only)
+  soft_label_weight: 1.0    # soft target = (1 - w) * hard label + w * share of the 10 answers saying "unanswerable"
+
+training:
+  seeds: [0, 1, 2]
+  epochs: 30
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.01        # AdamW (Loshchilov & Hutter 2019)
+  patience: 4               # early stopping on dev AUPRC
+  train_probe_size: 5000    # train pairs scored in eval mode each epoch, for the train/dev loss curves
+
+# features: vit_bert (ViT [CLS] + BERT mean, default) or clip (CLIP image + text embeddings, Radford et al. 2021)
+# base: reuse another model class under a new name
+models:
+  question_only:
+    hidden: 256
+    dropout: 0.3
+  image_only:
+    hidden: 256
+    dropout: 0.3
+  early:
+    hidden: 256
+    dropout: 0.3
+  clip_early:               # CLIP reference: early fusion on CLIP features
+    base: early
+    features: clip
+    hidden: 256
+    dropout: 0.3
+  cross_attention:          # token features exist only for ViT/BERT
+    d_model: 256
+    heads: 4
+    layers: 1
+    dropout: 0.1
+  gated:
+    hidden: 256
+    dropout: 0.3
+    modality_dropout: 0.15  # share of training pairs with the question or the photo blanked
+  gated_clip:               # gated fusion on CLIP features
+    base: gated
+    features: clip
+    hidden: 256
+    dropout: 0.3
+    modality_dropout: 0.15
