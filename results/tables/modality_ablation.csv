@@ -1,0 +1,16 @@
+model,input,auprc,auroc
+early,both,0.735,0.871
+early,question replaced by mean,0.549,0.752
+early,image replaced by mean,0.501,0.73
+cross_attention,both,0.714,0.865
+cross_attention,question replaced by mean,0.505,0.725
+cross_attention,image replaced by mean,0.497,0.732
+gated,both,0.705,0.855
+gated,question replaced by mean,0.531,0.739
+gated,image replaced by mean,0.514,0.735
+clip_early,both,0.777,0.901
+clip_early,question replaced by mean,0.617,0.799
+clip_early,image replaced by mean,0.482,0.724
+gated_clip,both,0.764,0.892
+gated_clip,question replaced by mean,0.588,0.786
+gated_clip,image replaced by mean,0.49,0.726

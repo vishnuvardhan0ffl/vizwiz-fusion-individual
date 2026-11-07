@@ -19,6 +19,31 @@ python -m src.evaluate --config configs/default.yaml --ablation-config configs/a
 python scripts/config_table.py --out results/tables/appendix_a_configs.csv
 ```
 
+## Results
+
+Official test split (8,000 pairs), mean (standard deviation) over three seeds; thresholds tuned on the development split. Full tables and figures are in [`results/`](results/) (aggregate numbers only).
+
+| Model | Encoders | Macro-F1 | AUPRC | ECE |
+|---|---|---|---|---|
+| Majority class | - | 0.423 | 0.268 | 0.001 |
+| Photo quality only | sharpness, brightness | 0.617 | 0.455 | 0.214 |
+| Question-only | BERT | 0.663 (0.001) | 0.536 (0.005) | 0.167 |
+| Image-only | ViT | 0.694 (0.001) | 0.597 (0.003) | 0.150 |
+| Late fusion | ViT + BERT | 0.742 (0.004) | 0.674 (0.002) | 0.165 |
+| Early fusion | ViT + BERT | 0.771 (0.004) | 0.733 (0.002) | 0.127 |
+| Cross-attention | ViT + BERT | 0.766 (0.004) | 0.719 (0.004) | 0.112 |
+| Gated fusion | ViT + BERT | 0.756 (0.001) | 0.708 (0.004) | 0.105 |
+| CLIP early fusion (reference) | CLIP | 0.800 (0.002) | 0.780 (0.002) | 0.106 |
+| CLIP gated fusion (reference) | CLIP | 0.793 (0.003) | 0.763 (0.003) | 0.116 |
+
+Key findings:
+
+- Every fusion model beats both single modalities; early fusion gains +0.072 macro-F1 over image-only (95% bootstrap interval +0.060 to +0.083).
+- The encoder matters more than the fusion design: CLIP adds 0.029 macro-F1 to early fusion, while the ViT/BERT fusion strategies differ by at most 0.015.
+- The gate in gated fusion barely varies across pairs, and modality dropout (0, 0.15, 0.3) or a second cross-attention block changes macro-F1 by at most 0.002.
+- Every model answers within 35 ms per query on a T4 GPU, mostly encoder time.
+- Errors concentrate on blurry photos (18.6% misclassified versus 12.8% for sharp ones), the main bias discussed in the report.
+
 ## Repository structure
 
 ```
@@ -35,8 +60,9 @@ tests/test_smoke.py               training-level check on synthetic data
 tests/test_pipeline.py            features + training + evaluation check with stub encoders
 docs/data_contract.md             feature, prediction and run-folder formats
 notebooks/01_vizwiz_pilot.ipynb   pilot analysis from the group proposal (Assignment 2.1)
-notebooks/02_pipeline.ipynb       the full individual pipeline (this project)
-results/figures/                  pilot figures
+notebooks/02_pipeline.ipynb       the full individual pipeline, saved with its outputs
+results/                          final test results: tables, figures, summary.json
+results/figures/pilot_*.png       pilot figures from the proposal
 ```
 
 ## Data

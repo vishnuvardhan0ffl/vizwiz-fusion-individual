@@ -1,0 +1,9 @@
+,0
+question_words_median,5.0
+question_words_p95,17.0
+repeated_question_share,0.595
+rare_question_share_test,0.482
+ambiguous_share,0.123
+sharpness_mannwhitney_p,8.1677773641973e-253
+unreadable_photos,0.0
+truncated_questions,0.0091

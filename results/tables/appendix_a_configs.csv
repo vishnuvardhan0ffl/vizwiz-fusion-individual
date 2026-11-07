@@ -1,0 +1,13 @@
+set,model,class,features,settings,params,seeds,epochs,sec_per_epoch,peak_vram_gb,dev_auprc_mean,dev_auprc_std
+runs,clip_early,early,clip,"hidden=256, dropout=0.3",264705,3,10.0,0.21,0.037,0.796,0.005
+runs,cross_attention,cross_attention,vit_bert,"d_model=256, heads=4, layers=1, dropout=0.1",987905,3,7.7,4.13,0.778,0.742,0.003
+runs,early,early,vit_bert,"hidden=256, dropout=0.3",396801,3,10.7,0.24,0.047,0.743,0.003
+runs,gated,gated,vit_bert,"hidden=256, dropout=0.3, modality_dropout=0.15",853761,3,9.3,0.31,0.05,0.725,0.003
+runs,gated_clip,gated,clip,"hidden=256, dropout=0.3, modality_dropout=0.15",591617,3,9.0,0.32,0.039,0.785,0.003
+runs,image_only,image_only,vit_bert,"hidden=256, dropout=0.3",198657,3,6.7,0.19,0.03,0.617,0.003
+runs,late,late,-,,,3,,,,0.695,0.002
+runs,question_only,question_only,vit_bert,"hidden=256, dropout=0.3",198657,3,10.7,0.2,0.03,0.569,0.002
+runs_ablation,cross_attention_l2,cross_attention,vit_bert,"d_model=256, heads=4, layers=2, dropout=0.1",1515265,3,7.7,6.05,0.788,0.745,0.004
+runs_ablation,gated_clip_md0,gated,clip,"hidden=256, dropout=0.3, modality_dropout=0.0",591617,3,8.7,0.3,0.04,0.79,0.004
+runs_ablation,gated_md0,gated,vit_bert,"hidden=256, dropout=0.3, modality_dropout=0.0",853761,3,7.0,0.31,0.05,0.731,0.002
+runs_ablation,gated_md30,gated,vit_bert,"hidden=256, dropout=0.3, modality_dropout=0.3",853761,3,8.0,0.31,0.05,0.724,0.003

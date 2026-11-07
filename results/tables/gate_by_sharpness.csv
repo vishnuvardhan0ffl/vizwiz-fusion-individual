@@ -1,0 +1,7 @@
+model,sharp_bin,answerable,unanswerable
+gated,blurry,0.215,0.219
+gated,medium,0.212,0.233
+gated,sharp,0.213,0.243
+gated_clip,blurry,0.497,0.493
+gated_clip,medium,0.499,0.499
+gated_clip,sharp,0.499,0.5

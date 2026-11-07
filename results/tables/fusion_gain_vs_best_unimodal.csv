@@ -1,0 +1,13 @@
+fusion,vs,metric,gain,ci_lo,ci_hi,ci_excludes_zero
+late,image_only,macro_f1,0.0419,0.0332,0.051,True
+late,image_only,auprc,0.0769,0.0632,0.0914,True
+early,image_only,macro_f1,0.072,0.0603,0.0835,True
+early,image_only,auprc,0.1354,0.1177,0.1536,True
+cross_attention,image_only,macro_f1,0.0725,0.0608,0.0852,True
+cross_attention,image_only,auprc,0.1142,0.0953,0.1329,True
+gated,image_only,macro_f1,0.0609,0.0492,0.0724,True
+gated,image_only,auprc,0.1045,0.0871,0.123,True
+clip_early,image_only,macro_f1,0.1039,0.0916,0.1168,True
+clip_early,image_only,auprc,0.1771,0.1577,0.1963,True
+gated_clip,image_only,macro_f1,0.0968,0.0844,0.1099,True
+gated_clip,image_only,auprc,0.164,0.1455,0.182,True
